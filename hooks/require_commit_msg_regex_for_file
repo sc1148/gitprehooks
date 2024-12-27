@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#Will look for particular jar file being committed, e.g. myprefix-17.3.jar
+JARFILE_PATTERN='myprefix-[0-9\.]{4,}\.jar$'
+#if found, will require "ALTREPO COMMIT xyz123qrp" as part of commit message
+REPO_COMMIT_PATTERN='ALTREPO COMMIT(:)? [a-zA-Z0-9]{8,}'
+
+files=`git diff --cached --name-only | grep -E $JARFILE_PATTERN `
+if [ -n "$files" ]; then
+  #found special jar in list of staged files, check commit msg
+  COMMIT_MSG="$1"
+  if ! grep -qE "$REPO_COMMIT_PATTERN" "$COMMIT_MSG";
+  then
+      echo "Commit message must contain the ALTREPO Commit ID when committing myprefix jar"
+      cat "$COMMIT_MSG"
+      exit 1
+  fi
+fi
