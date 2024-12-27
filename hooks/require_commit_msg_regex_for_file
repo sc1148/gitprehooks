@@ -3,6 +3,7 @@
 #Will look for particular jar file being committed, e.g. myprefix-17.3.jar
 JARFILE_PATTERN='myprefix-[0-9\.]{4,}\.jar$'
 #if found, will require "ALTREPO COMMIT xyz123qrp" as part of commit message
+#created to link two repos- source for .jar file was in repo1, but .jar was committed to repo2. This forces developer to note the commit ID in repo2 when committing the built .jar.
 REPO_COMMIT_PATTERN='ALTREPO COMMIT(:)? [a-zA-Z0-9]{8,}'
 
 files=`git diff --cached --name-only | grep -E $JARFILE_PATTERN `
