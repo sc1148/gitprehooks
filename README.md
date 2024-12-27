@@ -1,1 +1,1 @@
-This is a collection of useful Git prehook scripts.
+A collection of useful Git prehook scripts.
